@@ -14,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AsButton(text : String, ButtonIcon :Int){
-    Button(onClick = {},
+fun AsButton(text : String, ButtonIcon :Int, navController: NavController, newScreen : String){
+    Button(onClick = { navController.navigate(newScreen)},
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
         modifier = Modifier
             .height(70.dp)
