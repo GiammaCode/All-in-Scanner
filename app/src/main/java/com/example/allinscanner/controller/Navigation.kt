@@ -27,7 +27,7 @@ import com.example.allinscanner.screen.readQR
              ScanPDF()
          }
          composable(route = Screen.ReadBarcode.route){
-             readBarcode()
+             readBarcode(navController)
          }
 
      }

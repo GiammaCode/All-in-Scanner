@@ -1,5 +1,6 @@
 package com.example.allinscanner.item
 
+import android.Manifest
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -16,10 +17,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AsButton(text : String, ButtonIcon :Int, navController: NavController, newScreen : String){
-    Button(onClick = { navController.navigate(newScreen)},
+    val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
+
+    Button(onClick = {
+        cameraPermissionState.launchPermissionRequest()
+        navController.navigate(newScreen)
+        },
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red),
         modifier = Modifier
             .height(70.dp)
