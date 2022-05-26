@@ -5,10 +5,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.allinscanner.controller.Screen
 import com.example.allinscanner.mainMenu.MainMenu
-import com.example.allinscanner.screen.ScanPDF
-import com.example.allinscanner.screen.generateQR
-import com.example.allinscanner.screen.readBarcode
-import com.example.allinscanner.screen.readQR
+import com.example.allinscanner.screen.*
 
 @Composable
  fun Navigation(){
@@ -18,7 +15,7 @@ import com.example.allinscanner.screen.readQR
             MainMenu(navController = navController)
          }
          composable(route = Screen.ReadQR.route){
-             readQR()
+             readQRcode(navController)
          }
          composable(route = Screen.GenerateQR.route){
              generateQR()

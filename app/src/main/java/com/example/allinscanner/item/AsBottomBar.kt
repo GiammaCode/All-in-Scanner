@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
@@ -38,8 +39,13 @@ fun BottomBarForRead(navController: NavController, value: String){
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement  =  Arrangement.Center) {
         val context = LocalContext.current
+        val uriHandler = LocalUriHandler.current
         Column(modifier = Modifier.padding(end = 60.dp)) {
-            IconButton(onClick = { }) {
+            IconButton(onClick = {
+                if(value.isNotEmpty()){
+                    uriHandler.openUri(value)
+                }
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_search_in_web_24 ),
                     contentDescription = "searc web icon",
@@ -48,7 +54,9 @@ fun BottomBarForRead(navController: NavController, value: String){
             }
         }
         Column(modifier = Modifier.padding(end = 20.dp)) {
-            IconButton(onClick = {navController.navigate("mainMenu_screen") }) {
+            IconButton(onClick = {
+                navController.navigate("mainMenu_screen")
+            }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_home_24 ),
                     contentDescription = "home icon",
@@ -58,8 +66,10 @@ fun BottomBarForRead(navController: NavController, value: String){
         }
         Column(modifier = Modifier.padding(start = 60.dp)) {
             IconButton(onClick = {
-                clipboardManager.setText(AnnotatedString(value))
-                Toast.makeText(context,"Copied succesfully", Toast.LENGTH_SHORT).show()
+                if(value.isNotEmpty()){
+                    clipboardManager.setText(AnnotatedString(value))
+                    Toast.makeText(context,"Copied succesfully", Toast.LENGTH_SHORT).show()
+                }
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_baseline_content_copy_24 ),

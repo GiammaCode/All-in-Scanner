@@ -23,7 +23,7 @@ import java.util.concurrent.Executors
 
 
 @Composable
-fun BarcodeCameraPreview(){
+fun BarcodeCameraPreview(): String {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var preview by remember { mutableStateOf<Preview?>(null) }
@@ -59,7 +59,8 @@ fun BarcodeCameraPreview(){
                     barcodes.forEach { barcode ->
                         barcode.rawValue?.let { barcodeValue ->
                             barCodeVal.value = barcodeValue
-                            Toast.makeText(context, barcodeValue, Toast.LENGTH_SHORT).show()
+                         //launch toast with code value
+                        //Toast.makeText(context, barcodeValue, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -84,6 +85,7 @@ fun BarcodeCameraPreview(){
             }, ContextCompat.getMainExecutor(context))
         }
     )
+    return barCodeVal.value
 }
 
 
