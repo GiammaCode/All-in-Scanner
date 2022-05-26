@@ -18,10 +18,10 @@ import com.example.allinscanner.screen.*
              readQRcode(navController)
          }
          composable(route = Screen.GenerateQR.route){
-             generateQR()
+             generateQR(navController)
          }
          composable(route = Screen.ScanPDF.route){
-             ScanPDF()
+             scanPDF(navController)
          }
          composable(route = Screen.ReadBarcode.route){
              readBarcode(navController)

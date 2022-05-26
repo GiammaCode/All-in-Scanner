@@ -2,6 +2,7 @@ package com.example.allinscanner.item
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -14,6 +15,7 @@ import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,19 +24,19 @@ import androidx.navigation.NavController
 import com.example.allinscanner.R
 
 @Composable
-fun MainBottomBar(actualScreen: String){
-    BottomAppBar(backgroundColor = Color.Red)
+fun MainBottomBar(){
+    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red),
+    )
     {
         Text("Bottom App Bar")
     }
 }
 
-//search, home , copy
 @Composable
 fun BottomBarForRead(navController: NavController, value: String){
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
-    BottomAppBar(backgroundColor = Color.Red){
+    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)){
     Row(modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement  =  Arrangement.Center) {
@@ -44,6 +46,9 @@ fun BottomBarForRead(navController: NavController, value: String){
             IconButton(onClick = {
                 if(value.isNotEmpty()){
                     uriHandler.openUri(value)
+                }
+                else{
+                    Toast.makeText(context,"try scanning again", Toast.LENGTH_SHORT).show()
                 }
             }) {
                 Icon(
@@ -69,6 +74,9 @@ fun BottomBarForRead(navController: NavController, value: String){
                 if(value.isNotEmpty()){
                     clipboardManager.setText(AnnotatedString(value))
                     Toast.makeText(context,"Copied succesfully", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(context,"try scanning again", Toast.LENGTH_SHORT).show()
                 }
             }) {
                 Icon(

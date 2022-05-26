@@ -14,6 +14,7 @@ import com.example.allinscanner.R
 import com.example.allinscanner.controller.Screen
 import com.example.allinscanner.item.AsButton
 import com.example.allinscanner.item.AsTopBar
+import com.example.allinscanner.item.MainBottomBar
 
 @Composable
 fun MainMenu(navController: NavController) {
@@ -46,9 +47,6 @@ fun MainMenu(navController: NavController) {
                 }
             }
         }},
-        bottomBar = { BottomAppBar(backgroundColor = Color.Red)
-        {
-            Text("Bottom App Bar")
-        } }
+        bottomBar = { MainBottomBar()}
     )
 }

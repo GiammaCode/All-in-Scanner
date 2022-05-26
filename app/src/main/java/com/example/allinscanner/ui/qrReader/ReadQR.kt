@@ -27,8 +27,8 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.allinscanner.QRcode.BarCodeAnalyser
 import com.example.allinscanner.item.AsTopBar
-import com.example.allinscanner.item.BarcodeCameraPreview
 import com.example.allinscanner.item.BottomBarForRead
+import com.example.allinscanner.item.qRcodeCameraPreview
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.common.util.concurrent.ListenableFuture
 import java.util.concurrent.ExecutorService
@@ -48,14 +48,15 @@ fun readQRcode(navController: NavController) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    QRcodeVal = BarcodeCameraPreview()
+                    QRcodeVal = qRcodeCameraPreview()
                 }
-                Box(Modifier
-                    .padding(12.dp)
-                    .fillMaxWidth()
-                    .height(50.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color.Black.copy(alpha = 0.6f))
+                Box(
+                    Modifier
+                        .padding(12.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.Black.copy(alpha = 0.6f))
                 ){
                     Text(modifier = Modifier.padding(15.dp),
                         fontSize = 16.sp,
