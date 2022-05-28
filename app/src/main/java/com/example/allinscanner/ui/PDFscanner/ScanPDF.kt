@@ -121,13 +121,15 @@ fun scanPDF(navController: NavController) {
 
 
 //Store the capture image
-fun Context.getDirectory(): File {
+private fun Context.getDirectory(): File {
     val mediaDir = this.externalMediaDirs.firstOrNull()?.let {
         File(it, this.resources.getString(R.string.app_name)).apply { mkdirs() }
     }
     return if (mediaDir != null && mediaDir.exists())
         mediaDir else this.filesDir
 }
+
+
 
 
 

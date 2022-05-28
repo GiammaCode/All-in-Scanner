@@ -18,7 +18,7 @@ import androidx.lifecycle.LifecycleOwner
 import java.io.File
 
 @Composable
-fun CamerOpen(directory: File) {
+fun CamerOpen() {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
