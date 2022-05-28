@@ -1,16 +1,16 @@
 package com.example.allinscanner.item
 
+import android.content.Context
 import android.widget.Toast
+import androidx.camera.core.Camera
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.runtime.Composable
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
@@ -89,4 +88,77 @@ fun BottomBarForRead(navController: NavController, value: String){
         }
     }
 }
+
+@Composable
+fun BottomBarForScan(navController: NavController,
+                     context: Context,
+){
+
+    val camera: Camera? = null
+    var flashEnabled by remember { mutableStateOf(false) }
+    var flashRes by remember { mutableStateOf(R.drawable.ic_baseline_flash_on_24) }
+
+
+    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                val context = LocalContext.current
+                val uriHandler = LocalUriHandler.current
+                Column(modifier = Modifier.padding(end = 60.dp)) {
+                    IconButton(onClick = {
+                        Toast.makeText(context, "save clicked (WIP)", Toast.LENGTH_SHORT).show()
+
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_save_alt_24),
+                            contentDescription = "save PDF icon",
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                }
+                Column(modifier = Modifier.padding(end = 20.dp)) {
+                    IconButton(onClick = {
+                        navController.navigate("mainMenu_screen")
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_home_24),
+                            contentDescription = "home icon",
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                }
+                Column(modifier = Modifier.padding(start = 60.dp)) {
+                    IconButton(onClick = {
+                        Toast.makeText(context, "flash clicked (WIP)", Toast.LENGTH_SHORT).show()
+                        camera?.let {
+                            if (it.cameraInfo.hasFlashUnit()) {
+                                    if (flashEnabled) {
+                                        flashEnabled = false;
+                                        flashRes = R.drawable.ic_baseline_flash_off_24
+                                    }
+                                else{
+                                        flashEnabled = true;
+                                        flashRes = R.drawable.ic_baseline_flash_on_24
+                                    }
+
+                                it.cameraControl.enableTorch(flashEnabled)
+                            }
+                        }
+
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_baseline_flash_on_24),
+                            contentDescription = "flash camera icon",
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                }
+            }
+        }
+}
+
+
 

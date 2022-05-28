@@ -92,7 +92,7 @@ fun qRcodeCameraPreview(): String {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var preview by remember { mutableStateOf<Preview?>(null) }
-    val QRCodeVal = remember { mutableStateOf("") }
+    val qrCodeVal = remember { mutableStateOf("") }
 
     AndroidView(
         factory = { AndroidViewContext->
@@ -123,7 +123,7 @@ fun qRcodeCameraPreview(): String {
                 val barcodeAnalyser = BarCodeAnalyser { barcodes ->
                     barcodes.forEach { barcode ->
                         barcode.rawValue?.let { QRcodeValue ->
-                            QRCodeVal.value = QRcodeValue
+                            qrCodeVal.value = QRcodeValue
                         }
                     }
                 }
@@ -148,5 +148,6 @@ fun qRcodeCameraPreview(): String {
             }, ContextCompat.getMainExecutor(context))
         }
     )
-    return QRCodeVal.value
+    return qrCodeVal.value
 }
+
