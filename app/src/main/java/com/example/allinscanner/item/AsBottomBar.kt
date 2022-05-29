@@ -1,6 +1,7 @@
 package com.example.allinscanner.item
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Toast
 import androidx.camera.core.Camera
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,9 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
+import com.example.allinscanner.ui.PDFscanner.createPdfFromImageTask
+import com.pspdfkit.document.processor.PdfProcessor
+import java.io.File
 
 @Composable
 fun MainBottomBar(){
@@ -92,6 +96,9 @@ fun BottomBarForRead(navController: NavController, value: String){
 @Composable
 fun BottomBarForScan(navController: NavController,
                      context: Context,
+                     saveName: String,
+                     photoUri : Uri,
+                     outputDirectory: File
 ){
 
     val camera: Camera? = null
@@ -105,12 +112,17 @@ fun BottomBarForScan(navController: NavController,
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                val context = LocalContext.current
                 val uriHandler = LocalUriHandler.current
+                val saveOutNamePDF = saveName + ".pdf"
                 Column(modifier = Modifier.padding(end = 60.dp)) {
                     IconButton(onClick = {
-                        Toast.makeText(context, "save clicked (WIP)", Toast.LENGTH_SHORT).show()
+                        val task = createPdfFromImageTask(photoUri,context)
+                        val outputPath = outputDirectory.resolve(
+                            saveOutNamePDF )
+                        // Process the document.
+                        PdfProcessor.processDocument(task, outputPath)
 
+                        Toast.makeText(context, "save clicked (WIP)", Toast.LENGTH_SHORT).show()
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_baseline_save_alt_24),

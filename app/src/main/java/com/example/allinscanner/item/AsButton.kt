@@ -2,6 +2,8 @@ package com.example.allinscanner.item
 
 import android.Manifest
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.RectF
 import android.net.Uri
 import android.widget.Toast
 import androidx.camera.core.ImageCapture
@@ -28,8 +30,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
+import com.example.allinscanner.ui.PDFscanner.createPdfFromImageTask
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
+import com.pspdfkit.document.processor.NewPage
+import com.pspdfkit.document.processor.PageImage
+import com.pspdfkit.document.processor.PdfProcessor
+import com.pspdfkit.document.processor.PdfProcessorTask
+import com.pspdfkit.utils.Size
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,28 +77,36 @@ fun AsFloatingButton(context: Context,
                      onMediaCaptured: (Uri?) -> Unit,
                      executor: Executor,
                      imageCapture: ImageCapture,
-){
+                     saveName : String
+): File {
+    val saveOutName = saveName + ".png"
+    val photoFile = File(
+        outputDirectory,
+        saveOutName
+    )
+
     Button(
         onClick = {
-            val imgCapture = imageCapture ?: return@Button
-            val photoFile = File(
-                outputDirectory,
-                SimpleDateFormat("yyyyMMDD-HHmmss", Locale.US)
-                    .format(System.currentTimeMillis()) + ".jpg"
-            )
-            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-            imgCapture.takePicture(
-                outputOptions,
-                executor,
-                object : ImageCapture.OnImageSavedCallback {
-                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                        onMediaCaptured(Uri.fromFile(photoFile))
+            if (saveName.isEmpty()) {
+                Toast.makeText(context, "Insert PDF name", Toast.LENGTH_SHORT).show()
+            } else {
+                val imgCapture = imageCapture ?: return@Button
+                val photoUri = Uri.fromFile(photoFile)
+                val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+                imgCapture.takePicture(
+                    outputOptions,
+                    executor,
+                    object : ImageCapture.OnImageSavedCallback {
+                        override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                            onMediaCaptured(photoUri)
+                        }
+
+                        override fun onError(exception: ImageCaptureException) {
+                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                    override fun onError(exception: ImageCaptureException) {
-                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            )
+                )
+            }
         },
         modifier = Modifier
             .size(70.dp)
@@ -99,10 +115,18 @@ fun AsFloatingButton(context: Context,
             .border(2.dp, Color.White, CircleShape),
         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
 
-    ){
+        ) {
         Image(
             painterResource(R.drawable.ic_baseline_document_scanner_24),
             contentDescription = "scan button",
-            modifier = Modifier.size(20.dp))
+            modifier = Modifier.size(20.dp)
+        )
     }
+    return photoFile
 }
+
+
+
+
+
+

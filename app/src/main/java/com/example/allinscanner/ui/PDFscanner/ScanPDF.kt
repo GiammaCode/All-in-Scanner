@@ -1,6 +1,9 @@
 package com.example.allinscanner.screen
 
 import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.RectF
+import android.net.Uri
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
@@ -28,6 +31,10 @@ import com.example.allinscanner.item.AsTopBar
 import com.example.allinscanner.item.BottomBarForScan
 import com.example.allinscanner.ui.PDFscanner.FaceAnalyzer
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.pspdfkit.document.processor.NewPage
+import com.pspdfkit.document.processor.PageImage
+import com.pspdfkit.document.processor.PdfProcessorTask
+import com.pspdfkit.utils.Size
 import java.io.File
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -42,6 +49,10 @@ fun scanPDF(navController: NavController) {
     var preview by remember { mutableStateOf<Preview?>(null) }
     val executor = ContextCompat.getMainExecutor(context)
     val cameraProvider = cameraProviderFuture.get()
+    var photoFile = File(
+        "",
+       ""
+    )
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -49,12 +60,13 @@ fun scanPDF(navController: NavController) {
         //camera button
         floatingActionButton = {
             imageCapture?.let {
-                AsFloatingButton(
+                 photoFile = AsFloatingButton(
                     context = context,
                     outputDirectory = context.getDirectory(),
                     onMediaCaptured = { url -> },
                     executor = executor,
-                    imageCapture = it
+                    imageCapture = it,
+                    saveName = pdfName
                 )
             }
         },
@@ -114,7 +126,10 @@ fun scanPDF(navController: NavController) {
         bottomBar = {
             BottomBarForScan(
                 navController = navController,
-                context = context)
+                context = context,
+                saveName = pdfName,
+                photoUri = Uri.fromFile(photoFile) ,
+                outputDirectory = context.getDirectory())
         }
     )
 }
@@ -128,9 +143,6 @@ private fun Context.getDirectory(): File {
     return if (mediaDir != null && mediaDir.exists())
         mediaDir else this.filesDir
 }
-
-
-
 
 
 
