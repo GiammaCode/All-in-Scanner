@@ -2,6 +2,7 @@ package com.example.allinscanner.item
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.camera.core.Camera
 import androidx.compose.foundation.layout.*
@@ -23,8 +24,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.ui.PDFscanner.createPdfFromImageTask
+import com.example.allinscanner.ui.PDFscanner.processPdf
 import com.pspdfkit.document.processor.PdfProcessor
 import java.io.File
+import java.lang.Exception
 
 @Composable
 fun MainBottomBar(){
@@ -113,16 +116,15 @@ fun BottomBarForScan(navController: NavController,
                 horizontalArrangement = Arrangement.Center
             ) {
                 val uriHandler = LocalUriHandler.current
-                val saveOutNamePDF = saveName + ".pdf"
                 Column(modifier = Modifier.padding(end = 60.dp)) {
                     IconButton(onClick = {
-                        val task = createPdfFromImageTask(photoUri,context)
-                        val outputPath = outputDirectory.resolve(
-                            saveOutNamePDF )
-                        // Process the document.
-                        PdfProcessor.processDocument(task, outputPath)
-
-                        Toast.makeText(context, "save clicked (WIP)", Toast.LENGTH_SHORT).show()
+                            try {
+                                //save the PDF
+                                processPdf(context, photoUri, saveName, outputDirectory)
+                            } catch (e: Exception) {
+                                Toast.makeText(context, "Retry to scan", Toast.LENGTH_SHORT).show()
+                                Log.e("processPDF ERROR", e.message.toString())
+                            }
                     }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_baseline_save_alt_24),
@@ -170,7 +172,7 @@ fun BottomBarForScan(navController: NavController,
                 }
             }
         }
-}
+    }
 
 
 

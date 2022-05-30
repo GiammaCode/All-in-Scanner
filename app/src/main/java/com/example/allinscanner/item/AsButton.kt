@@ -87,9 +87,7 @@ fun AsFloatingButton(context: Context,
 
     Button(
         onClick = {
-            if (saveName.isEmpty()) {
-                Toast.makeText(context, "Insert PDF name", Toast.LENGTH_SHORT).show()
-            } else {
+            if (saveName.isNotEmpty()) {
                 val imgCapture = imageCapture ?: return@Button
                 val photoUri = Uri.fromFile(photoFile)
                 val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
@@ -99,6 +97,7 @@ fun AsFloatingButton(context: Context,
                     object : ImageCapture.OnImageSavedCallback {
                         override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                             onMediaCaptured(photoUri)
+                            Toast.makeText(context, "Image scanned", Toast.LENGTH_SHORT).show()
                         }
 
                         override fun onError(exception: ImageCaptureException) {
@@ -106,6 +105,8 @@ fun AsFloatingButton(context: Context,
                         }
                     }
                 )
+            } else {
+                Toast.makeText(context, "Insert PDF name", Toast.LENGTH_SHORT).show()
             }
         },
         modifier = Modifier

@@ -76,12 +76,6 @@ fun scanPDF(navController: NavController) {
                 factory = { ctx ->
                     val previewView = PreviewView(ctx)
                     cameraProviderFuture.addListener({
-                        val imageAnalysis = ImageAnalysis.Builder()
-                            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                            .build()
-                            .apply {
-                                setAnalyzer(executor, FaceAnalyzer())
-                            }
                         imageCapture = ImageCapture.Builder()
                             .setTargetRotation(previewView.display.rotation)
                             .build()
