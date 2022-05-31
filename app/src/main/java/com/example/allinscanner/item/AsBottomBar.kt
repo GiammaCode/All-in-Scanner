@@ -1,7 +1,6 @@
 package com.example.allinscanner.item
 
 import android.content.Context
-import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +20,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.ui.PDFscanner.processPdf
@@ -178,7 +175,7 @@ fun BottomBarForScan(navController: NavController,
                         }
                         Column(modifier = Modifier.padding(start = 60.dp)) {
                             IconButton(onClick = {
-                                Toast.makeText(context, "flash clicked (WIP)", Toast.LENGTH_SHORT).show()
+                                //Toast.makeText(context, "flash clicked (WIP)", Toast.LENGTH_SHORT).show()
                                 if(flashDisable){
                                     camera.cameraControl.enableTorch(true)
                                     flashDisable = false
@@ -205,7 +202,61 @@ fun BottomBarForScan(navController: NavController,
                     }
                 }
             }
-    
+
+@Composable
+fun BottomBarForGenQR(navController: NavController,
+                      context: Context
+){
+    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Column(modifier = Modifier.padding(end = 60.dp)) {
+                IconButton(onClick = {
+                    Toast.makeText(context, "save (WIP)", Toast.LENGTH_SHORT).show()
+                    try {
+                        //save file
+                    } catch (e: Exception) {
+
+                    }
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_save_alt_24),
+                        contentDescription = "save QR icon",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+            Column(modifier = Modifier.padding(end = 20.dp)) {
+                IconButton(onClick = {
+                    navController.navigate("mainMenu_screen")
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_home_24),
+                        contentDescription = "home icon",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+            Column(modifier = Modifier.padding(start = 60.dp)) {
+                IconButton(onClick = {
+                    Toast.makeText(context, "convert (WIP)", Toast.LENGTH_SHORT).show()
+                    //function converter
+
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_hive_24),
+                        contentDescription = "flash camera icon",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
 
 
 
