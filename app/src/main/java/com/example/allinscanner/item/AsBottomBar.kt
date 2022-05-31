@@ -5,6 +5,7 @@ import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.camera.core.Camera
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
@@ -135,58 +136,76 @@ fun BottomBarForScan(navController: NavController,
                      context: Context,
                      saveName: String,
                      photoUri : Uri,
-                     outputDirectory: File
+                     outputDirectory: File,
+                     camera: Camera
 ){
-
-            BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Column(modifier = Modifier.padding(end = 60.dp)) {
-                    IconButton(onClick = {
-                            try {
-                                //save the PDF
-                                processPdf(context, photoUri, saveName, outputDirectory)
-                            } catch (e: Exception) {
-                                Toast.makeText(context, "Retry to scan", Toast.LENGTH_SHORT).show()
-                                Log.e("processPDF ERROR", e.message.toString())
+            var flashDisable by remember {
+                mutableStateOf(true)
+            }
+                BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Column(modifier = Modifier.padding(end = 60.dp)) {
+                            IconButton(onClick = {
+                                try {
+                                    //save the PDF
+                                    processPdf(context, photoUri, saveName, outputDirectory)
+                                } catch (e: Exception) {
+                                    Toast.makeText(context, "Retry to scan", Toast.LENGTH_SHORT).show()
+                                    Log.e("processPDF ERROR", e.message.toString())
+                                }
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_save_alt_24),
+                                    contentDescription = "save PDF icon",
+                                    modifier = Modifier.size(30.dp)
+                                )
                             }
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_save_alt_24),
-                            contentDescription = "save PDF icon",
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
-                }
-                Column(modifier = Modifier.padding(end = 20.dp)) {
-                    IconButton(onClick = {
-                        navController.navigate("mainMenu_screen")
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_home_24),
-                            contentDescription = "home icon",
-                            modifier = Modifier.size(30.dp)
-                        )
-                    }
-                }
-                Column(modifier = Modifier.padding(start = 60.dp)) {
-                    IconButton(onClick = {
-                        Toast.makeText(context, "flash clicked (WIP)", Toast.LENGTH_SHORT).show()
+                        }
+                        Column(modifier = Modifier.padding(end = 20.dp)) {
+                            IconButton(onClick = {
+                                navController.navigate("mainMenu_screen")
+                            }) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_baseline_home_24),
+                                    contentDescription = "home icon",
+                                    modifier = Modifier.size(30.dp)
+                                )
+                            }
+                        }
+                        Column(modifier = Modifier.padding(start = 60.dp)) {
+                            IconButton(onClick = {
+                                Toast.makeText(context, "flash clicked (WIP)", Toast.LENGTH_SHORT).show()
+                                if(flashDisable){
+                                    camera.cameraControl.enableTorch(true)
+                                    flashDisable = false
+                                }
+                                else{
+                                    camera.cameraControl.enableTorch(false)
+                                    flashDisable = true
+                                }
 
-                    }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_baseline_flash_on_24),
-                            contentDescription = "flash camera icon",
-                            modifier = Modifier.size(30.dp)
-                        )
+                            }) {
+                                Icon(
+                                    painter = painterResource(
+                                        id = if (flashDisable) {
+                                            R.drawable.ic_baseline_flash_on_24
+                                        } else {
+                                            R.drawable.ic_baseline_flash_off_24
+                                        }
+                                    ),
+                                    contentDescription = "flash camera icon",
+                                    modifier = Modifier.size(30.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
-        }
-    }
+    
 
 
 

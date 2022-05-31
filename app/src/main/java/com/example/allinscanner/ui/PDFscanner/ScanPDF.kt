@@ -1,8 +1,10 @@
 package com.example.allinscanner.screen
 
 import android.content.Context
+import android.graphics.Camera
 import android.net.Uri
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -41,6 +43,7 @@ fun scanPDF(navController: NavController) {
     var preview by remember { mutableStateOf<Preview?>(null) }
     val executor = ContextCompat.getMainExecutor(context)
     val cameraProvider = cameraProviderFuture.get()
+    var camera = cameraProvider.bindToLifecycle(lifecycleOwner, CameraSelector.DEFAULT_BACK_CAMERA)
     var photoFile = File(
         "",
        ""
@@ -115,7 +118,10 @@ fun scanPDF(navController: NavController) {
                 context = context,
                 saveName = pdfName,
                 photoUri = Uri.fromFile(photoFile) ,
-                outputDirectory = context.getDirectory())
+                outputDirectory = context.getDirectory(),
+                camera = camera
+            )
+
         }
     )
 }
