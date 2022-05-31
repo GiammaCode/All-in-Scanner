@@ -5,12 +5,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.item.AsButton
-import com.example.allinscanner.item.AsTopBar
+import com.example.allinscanner.item.topBarFirst
 import com.example.allinscanner.item.MainBottomBar
 
 @Composable
@@ -18,7 +17,7 @@ fun generateQR(navController : NavController) {
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { AsTopBar()},
+        topBar = { topBarFirst()},
         content = { Box(
             Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -43,6 +42,6 @@ fun generateQR(navController : NavController) {
             }
         }
         },
-        bottomBar = { MainBottomBar() }
+        bottomBar = { MainBottomBar(navController) }
     )
 }

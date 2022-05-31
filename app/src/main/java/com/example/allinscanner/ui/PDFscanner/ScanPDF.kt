@@ -1,11 +1,8 @@
 package com.example.allinscanner.screen
 
 import android.content.Context
-import android.graphics.BitmapFactory
-import android.graphics.RectF
 import android.net.Uri
 import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -27,14 +24,9 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.item.AsFloatingButton
-import com.example.allinscanner.item.AsTopBar
 import com.example.allinscanner.item.BottomBarForScan
-import com.example.allinscanner.ui.PDFscanner.FaceAnalyzer
+import com.example.allinscanner.item.topBarSec
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.pspdfkit.document.processor.NewPage
-import com.pspdfkit.document.processor.PageImage
-import com.pspdfkit.document.processor.PdfProcessorTask
-import com.pspdfkit.utils.Size
 import java.io.File
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -56,7 +48,7 @@ fun scanPDF(navController: NavController) {
 
     Scaffold(
         scaffoldState = scaffoldState,
-        topBar = { AsTopBar() },
+        topBar = { topBarSec("Scanner PDF", navController) },
         //camera button
         floatingActionButton = {
             imageCapture?.let {

@@ -1,10 +1,10 @@
 package com.example.allinscanner.item
 
 import android.content.Context
+import android.hardware.camera2.CameraManager
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import androidx.camera.core.Camera
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
@@ -21,20 +21,54 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import com.example.allinscanner.R
-import com.example.allinscanner.ui.PDFscanner.createPdfFromImageTask
 import com.example.allinscanner.ui.PDFscanner.processPdf
-import com.pspdfkit.document.processor.PdfProcessor
 import java.io.File
-import java.lang.Exception
 
 @Composable
-fun MainBottomBar(){
-    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red),
-    )
-    {
-        Text("Bottom App Bar")
+fun MainBottomBar(navController: NavController){
+    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)){
+        Row(modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement  =  Arrangement.Center) {
+            val context = LocalContext.current
+            val uriHandler = LocalUriHandler.current
+            Column(modifier = Modifier.padding(end = 60.dp)) {
+                IconButton(onClick = {
+                    //navController.navigate("myPDF_screen")
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_picture_as_pdf_24 ),
+                        contentDescription = "My pdf icon",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+            Column(modifier = Modifier.padding(end = 20.dp)) {
+                IconButton(onClick = {
+                    navController.navigate("mainMenu_screen")
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_home_24 ),
+                        contentDescription = "home icon",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+            Column(modifier = Modifier.padding(start = 60.dp)) {
+                IconButton(onClick = {
+                    //navController.navigate("myQr_screen")
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_baseline_qr_code_24),
+                        contentDescription = "My qr icon",
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -104,18 +138,12 @@ fun BottomBarForScan(navController: NavController,
                      outputDirectory: File
 ){
 
-    val camera: Camera? = null
-    var flashEnabled by remember { mutableStateOf(false) }
-    var flashRes by remember { mutableStateOf(R.drawable.ic_baseline_flash_on_24) }
-
-
-    BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
+            BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-                val uriHandler = LocalUriHandler.current
                 Column(modifier = Modifier.padding(end = 60.dp)) {
                     IconButton(onClick = {
                             try {
@@ -147,20 +175,6 @@ fun BottomBarForScan(navController: NavController,
                 Column(modifier = Modifier.padding(start = 60.dp)) {
                     IconButton(onClick = {
                         Toast.makeText(context, "flash clicked (WIP)", Toast.LENGTH_SHORT).show()
-                        camera?.let {
-                            if (it.cameraInfo.hasFlashUnit()) {
-                                    if (flashEnabled) {
-                                        flashEnabled = false;
-                                        flashRes = R.drawable.ic_baseline_flash_off_24
-                                    }
-                                else{
-                                        flashEnabled = true;
-                                        flashRes = R.drawable.ic_baseline_flash_on_24
-                                    }
-
-                                it.cameraControl.enableTorch(flashEnabled)
-                            }
-                        }
 
                     }) {
                         Icon(
