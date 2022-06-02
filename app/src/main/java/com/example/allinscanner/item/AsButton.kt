@@ -80,7 +80,7 @@ fun AsButtonGenerator(text : String, ButtonIcon :Int, navController: NavControll
         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
         modifier = Modifier
             .height(40.dp)
-            .width(100.dp),
+            .width(110.dp),
         shape = RoundedCornerShape(30)
     )
     {

@@ -23,11 +23,11 @@ import com.example.allinscanner.item.MainBottomBar
 import com.example.allinscanner.item.topBarSec
 
 @Composable
-fun generateQRfromURL(navController : NavController) {
+fun generateQRfromURL(navController: NavController) {
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
 
     val context = LocalContext.current
-    var qrContent by remember { mutableStateOf("All in Scanner") }
+    var qrContent by remember { mutableStateOf("Insert URL") }
     var bmp by remember { mutableStateOf(getQrCodeBitmap(qrContent)) }
 
 
@@ -41,25 +41,41 @@ fun generateQRfromURL(navController : NavController) {
                     .padding(vertical = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround) {
-                    AsButtonGenerator("Text", R.drawable.ic_baseline_text_snippet_24, navController, "textGenerator_Screen")
-                    AsButtonGenerator("URL", R.drawable.ic_baseline_add_link_24, navController, "urlGenerator_Screen")
-                    AsButtonGenerator("Position", R.drawable.ic_baseline_map_24, navController, "positionGenerator_Screen")
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    AsButtonGenerator(
+                        "Text",
+                        R.drawable.ic_baseline_text_snippet_24,
+                        navController,
+                        "textGenerator_Screen"
+                    )
+                    AsButtonGenerator(
+                        "URL",
+                        R.drawable.ic_baseline_add_link_24,
+                        navController,
+                        "urlGenerator_Screen"
+                    )
+                    AsButtonGenerator(
+                        "Maps",
+                        R.drawable.ic_baseline_map_24,
+                        navController,
+                        "positionGenerator_Screen"
+                    )
                 }
                 Row() {
                     //QR CODE image
                     Image(bitmap = bmp.asImageBitmap(), contentDescription = "qr")
                 }
-                Row (){
+                Row() {
                     //manda configurazione
-                    Text("URL")
                     Box(
                         Modifier
                             .padding(12.dp)
                             .fillMaxWidth()
-                            .height(100.dp)
+                            .height(50.dp)
                             .clip(RoundedCornerShape(12.dp))
                             .background(Color.Gray.copy(alpha = 0.6f))
                     ) {
@@ -72,11 +88,14 @@ fun generateQRfromURL(navController : NavController) {
                         )
                     }
                 }
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround) {
-                    Button(onClick = {
-                        //save QR
-                    },
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(
+                        onClick = {
+                            //save QR
+                        },
                         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
                         modifier = Modifier
                             .height(50.dp)
@@ -87,15 +106,19 @@ fun generateQRfromURL(navController : NavController) {
                         Image(
                             painterResource(id = R.drawable.ic_baseline_save_alt_24),
                             contentDescription = "Save QR",
-                            modifier = Modifier.size(20.dp))
-                        Text(text = "Save QR",
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Text(
+                            text = "Save QR",
                             Modifier.padding(start = 10.dp),
-                            style = MaterialTheme.typography.subtitle1)
+                            style = MaterialTheme.typography.subtitle1
+                        )
                     }
 
-                    Button(onClick = {
-                        getQrCodeBitmap(qrContent)
-                    },
+                    Button(
+                        onClick = {
+                            bmp = getQrCodeBitmap(qrContent)
+                        },
                         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
                         modifier = Modifier
                             .height(50.dp)
@@ -106,10 +129,13 @@ fun generateQRfromURL(navController : NavController) {
                         Image(
                             painterResource(id = R.drawable.ic_baseline_hive_24),
                             contentDescription = "Generate QR",
-                            modifier = Modifier.size(20.dp))
-                        Text(text = "Generate QR",
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Text(
+                            text = "Generate QR",
                             Modifier.padding(start = 10.dp),
-                            style = MaterialTheme.typography.subtitle1)
+                            style = MaterialTheme.typography.subtitle1
+                        )
                     }
                 }
             }
