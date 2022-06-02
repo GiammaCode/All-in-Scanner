@@ -1,10 +1,12 @@
 package com.example.allinscanner.item
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.camera.core.Camera
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Icon
@@ -12,6 +14,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.ClipboardManager
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
@@ -23,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.ui.PDFscanner.processPdf
+import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
 import java.io.File
 
 @Composable
@@ -204,9 +208,14 @@ fun BottomBarForScan(navController: NavController,
             }
 
 @Composable
-fun BottomBarForGenQR(navController: NavController,
-                      context: Context
-){
+fun BottomBarForGenQR(
+    navController: NavController,
+    context: Context,
+    qrContent: String,
+    bmp:Bitmap
+): Bitmap {
+    var bitmp = bmp
+
     BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -244,7 +253,7 @@ fun BottomBarForGenQR(navController: NavController,
                 IconButton(onClick = {
                     Toast.makeText(context, "convert (WIP)", Toast.LENGTH_SHORT).show()
                     //function converter
-
+                    bitmp = getQrCodeBitmap(qrContent)
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_hive_24),
@@ -255,6 +264,7 @@ fun BottomBarForGenQR(navController: NavController,
             }
         }
     }
+    return bitmp
 }
 
 

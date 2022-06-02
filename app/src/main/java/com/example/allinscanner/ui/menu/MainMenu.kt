@@ -33,7 +33,7 @@ fun MainMenu(navController: NavController) {
                     AsButton("Read Qr", R.drawable.ic_baseline_qr_code_scanner_24, navController,"readQR_screen")
                 }
                 Row(modifier = Modifier.padding(top = 30.dp)) {
-                    AsButton("Generate Qr", R.drawable.ic_baseline_qr_code_24, navController,"generateQR_screen")
+                    AsButton("Generate Qr", R.drawable.ic_baseline_qr_code_24, navController,"textGenerator_screen")
                 }
                 Row(modifier = Modifier.padding(top = 30.dp)) {
                     AsButton("Scan PDF", R.drawable.ic_baseline_picture_as_pdf_24, navController, "scanPDF_screen")

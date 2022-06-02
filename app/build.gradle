@@ -78,4 +78,7 @@ dependencies {
 
     //psPDF kit
     implementation("com.pspdfkit:pspdfkit:8.2.1")
+
+    //QRgenerator
+    implementation 'com.google.zxing:core:3.4.0'
 }

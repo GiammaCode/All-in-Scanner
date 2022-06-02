@@ -14,7 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun textConfig(){
+fun textConfig() : String{
     var outputText by remember { mutableStateOf("") }
     Column(Modifier
         .fillMaxSize(),
@@ -38,11 +38,12 @@ fun textConfig(){
             )
         }
     }
+    return outputText
 }
 
 @Composable
-fun urlConfig(){
-    var outputText by remember { mutableStateOf("") }
+fun urlConfig() : String{
+    var outputURL by remember { mutableStateOf("") }
     Column(Modifier
         .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -58,11 +59,12 @@ fun urlConfig(){
         ) {
             TextField(
                 modifier = Modifier.fillMaxSize(),
-                value = outputText,
-                onValueChange = { outputText = it },
+                value = outputURL,
+                onValueChange = { outputURL = it },
                 textStyle = TextStyle(color = Color.Black),
                 maxLines = 1
             )
         }
     }
+    return outputURL
 }

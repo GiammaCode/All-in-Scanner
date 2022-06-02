@@ -6,6 +6,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.allinscanner.controller.Screen
 import com.example.allinscanner.mainMenu.MainMenu
 import com.example.allinscanner.screen.*
+import com.example.allinscanner.ui.qrGenerator.generateQRfromPosition
+import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
 
 @Composable
  fun Navigation(){
@@ -17,14 +19,20 @@ import com.example.allinscanner.screen.*
          composable(route = Screen.ReadQR.route){
              readQRcode(navController)
          }
-         composable(route = Screen.GenerateQR.route){
-             generateQR(navController)
-         }
          composable(route = Screen.ScanPDF.route){
              scanPDF(navController)
          }
          composable(route = Screen.ReadBarcode.route){
              readBarcode(navController)
+         }
+         composable(route = Screen.TextQrGenerator.route){
+             generateQRfromtext(navController)
+         }
+         composable(route = Screen.UrlQrGenerator.route){
+             generateQRfromURL(navController)
+         }
+         composable(route = Screen.PositionQrGenerator.route){
+             generateQRfromPosition(navController)
          }
 
      }

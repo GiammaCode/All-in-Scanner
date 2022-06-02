@@ -70,6 +70,29 @@ fun AsButton(text : String, ButtonIcon :Int, navController: NavController, newSc
             style = MaterialTheme.typography.h5)
     }
 }
+@Composable
+fun AsButtonGenerator(text : String, ButtonIcon :Int, navController: NavController, newScreen : String
+){
+
+    Button(onClick = {
+        navController.navigate(newScreen)
+    },
+        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
+        modifier = Modifier
+            .height(40.dp)
+            .width(100.dp),
+        shape = RoundedCornerShape(30)
+    )
+    {
+        Image(
+            painterResource(id = ButtonIcon),
+            contentDescription = text,
+            modifier = Modifier.size(20.dp))
+        Text(text = text,
+            Modifier.padding(start = 10.dp),
+            style = MaterialTheme.typography.subtitle1)
+    }
+}
 
 @Composable
 fun AsFloatingButton(context: Context,
