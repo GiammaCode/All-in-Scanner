@@ -12,25 +12,31 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.allinscanner.R
-import com.example.allinscanner.item.AsButtonGenerator
-import com.example.allinscanner.item.BottomBarForGenQR
-import com.example.allinscanner.item.MainBottomBar
-import com.example.allinscanner.item.topBarSec
+import com.example.allinscanner.item.*
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
+
 
 @Composable
 fun generateQRfromtext(navController: NavController) {
 
-    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
-    var qrContent by remember { mutableStateOf("Insert Text") }
-    var bmp by remember { mutableStateOf(getQrCodeBitmap(qrContent)) }
+    val context = LocalContext.current
 
+    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
+    var qrContent by remember {
+        mutableStateOf("Insert Text:")
+    }
+    var qrName by remember {
+        mutableStateOf("My QR name")
+    }
+    var qrColor by remember {
+        mutableStateOf(android.graphics.Color.BLACK)
+    }
+    var bmp by remember {
+        mutableStateOf(getQrCodeBitmap(qrContent, qrColor))
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -43,102 +49,49 @@ fun generateQRfromtext(navController: NavController) {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    AsButtonGenerator(
-                        "Text",
-                        R.drawable.ic_baseline_text_snippet_24,
-                        navController,
-                        "textGenerator_Screen"
-                    )
-                    AsButtonGenerator(
-                        "URL",
-                        R.drawable.ic_baseline_add_link_24,
-                        navController,
-                        "urlGenerator_Screen"
-                    )
-                    AsButtonGenerator(
-                        "Maps",
-                        R.drawable.ic_baseline_map_24,
-                        navController,
-                        "positionGenerator_Screen"
-                    )
-                }
-                Row() {
-                    //QR CODE image
-                    Image(bitmap = bmp.asImageBitmap(), contentDescription = "qr")
-                }
-                Row() {
-                    //insert text
-                    Box(
-                        Modifier
-                            .padding(12.dp)
-                            .fillMaxWidth()
-                            .height(100.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(Color.Gray.copy(alpha = 0.6f))
-                    ) {
-                        TextField(
-                            modifier = Modifier.fillMaxSize(),
-                            value = qrContent,
-                            onValueChange = { qrContent = it },
-                            textStyle = TextStyle(color = Color.Black),
-                            maxLines = 5
-                        )
-                    }
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    Button(
-                        onClick = {
-                            //save QR
-                        },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(170.dp),
-                        shape = RoundedCornerShape(30)
-                    )
-                    {
-                        Image(
-                            painterResource(id = R.drawable.ic_baseline_save_alt_24),
-                            contentDescription = "Save QR",
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Text(
-                            text = "Save QR",
-                            Modifier.padding(start = 10.dp),
-                            style = MaterialTheme.typography.subtitle1
-                        )
-                    }
+                //row of button (URL , text, maps)
+                AsTopButtonRow(navController)
 
-                    Button(
-                        onClick = {
-                           bmp = getQrCodeBitmap(qrContent)
-                        },
-                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(170.dp),
-                        shape = RoundedCornerShape(30)
+                //QR CODE image
+                Image(bmp.asImageBitmap(), "qr code")
+
+                //insert text
+                Box(
+                    Modifier
+                        .padding(12.dp)
+                        .fillMaxWidth()
+                        .height(85.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.Gray.copy(alpha = 0.6f))
+                ) {
+                    TextField(
+                        modifier = Modifier.fillMaxSize(),
+                        value = qrContent,
+                        onValueChange = { qrContent = it },
+                        textStyle = TextStyle(color = Color.Black),
                     )
-                    {
-                        Image(
-                            painterResource(id = R.drawable.ic_baseline_hive_24),
-                            contentDescription = "Generate QR",
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Text(
-                            text = "Generate QR",
-                            Modifier.padding(start = 10.dp),
-                            style = MaterialTheme.typography.subtitle1
-                        )
-                    }
                 }
+                //insert qrName
+                Box(
+                    Modifier
+                        .padding(12.dp)
+                        .fillMaxWidth()
+                        .height(50.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color.Gray.copy(alpha = 0.6f))
+                ) {
+                    TextField(
+                        modifier = Modifier.fillMaxSize(),
+                        value = qrName,
+                        onValueChange = { qrName = it },
+                        textStyle = TextStyle(color = Color.Black),
+                    )
+                }
+
+                qrColor = dropDownColor()
+
+                //row of button(save and generate)
+                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor)
             }
         },
         bottomBar = { MainBottomBar(navController) }
