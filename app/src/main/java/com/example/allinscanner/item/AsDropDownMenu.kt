@@ -1,17 +1,16 @@
 package com.example.allinscanner.item
 
 import android.graphics.Color
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.unit.dp
 
@@ -25,26 +24,24 @@ fun dropDownColor(): Int {
     Box(
         modifier = Modifier
             .padding(12.dp)
-            .width(75.dp)
-            .height(30.dp)
-            .clip(RoundedCornerShape(20.dp)),
-        contentAlignment = Alignment.Center
+            .fillMaxWidth(0.4f)
+            .height(40.dp)
+            .border(1.dp, Gray, CircleShape),
+
     ) {
         Text(
             items[selectedIndex],
             modifier = Modifier
                 .fillMaxSize()
                 .clickable(onClick = { expanded = true })
-                .background(Gray.copy(alpha = 0.6f))
-                .padding(start = 10.dp)
+                .padding(start = 20.dp, top = 5.dp),
         )
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(5))
-                .background(Gray.copy(alpha = 0.6f))
+                .border(1.dp, Gray, RoundedCornerShape(12.dp))
         ) {
             items.forEachIndexed { index, s ->
                 DropdownMenuItem(onClick = {
