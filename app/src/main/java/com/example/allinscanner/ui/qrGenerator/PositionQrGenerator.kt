@@ -1,7 +1,7 @@
 package com.example.allinscanner.ui.qrGenerator
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,17 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.item.*
-import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -47,18 +43,12 @@ fun generateQRfromPosition(navController: NavController) {
         mutableStateOf(getQrCodeBitmap("All in Scanner", qrColor))
     }
 
-    ///
-    val campusCesena = LatLng(44.14, 12.23)
+    var qrPosition by remember{
+        mutableStateOf(LatLng(44.14, 12.23)
+        )}
+
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(campusCesena, 10f)
-    }
-    val myMarker = Marker(
-        state = MarkerState(position = campusCesena),
-        title = "Campus di Cesena",
-        snippet = "Marker in Cesena",
-        draggable = true
-    ) {
-        qrContent = campusCesena.toString()
+        position = CameraPosition.fromLatLngZoom(qrPosition, 10f)
     }
 
     Scaffold(
@@ -89,9 +79,18 @@ fun generateQRfromPosition(navController: NavController) {
                             .fillMaxWidth()
                             .padding(12.dp)
                             .clip(RoundedCornerShape(12.dp)),
-                        cameraPositionState = cameraPositionState
+                        cameraPositionState = cameraPositionState,
+                        onMapClick = { p0 -> qrPosition = p0}
                     ){
-                        myMarker
+                        Marker(
+                            state = MarkerState(qrPosition),
+                            title = "All In Scanner",
+                            snippet = "Convert this position",
+                            draggable = true,
+                            flat = true
+                        ) {
+                        }
+
                     }
                 }
                 //insert qrName
@@ -109,7 +108,7 @@ fun generateQRfromPosition(navController: NavController) {
                         label = { Text("Qr name") },
                         placeholder = { Text(text = "Insert qr name") },
                         onValueChange = {
-                            qrContent = it
+                            qrName = it
                         }
                     )
                 }
@@ -119,8 +118,8 @@ fun generateQRfromPosition(navController: NavController) {
                 }
                 //row of button(save and generate)
                 item {
-                    var string = "https://maps.google.com/local?q="
-                    bmp = AsBottomButtonRow(context, string+campusCesena.latitude+","+campusCesena.longitude, qrName, bmp, qrColor)
+                    var qrCont = "https://maps.google.com/local?q="+qrPosition.latitude+","+qrPosition.longitude
+                    bmp = AsBottomButtonRow(context, qrCont, qrName, bmp, qrColor)
                 }
                 item {
                     Spacer(modifier = Modifier.height(64.dp))
