@@ -49,7 +49,7 @@ fun generateQRfromURL(navController: NavController) {
             Column(
                 Modifier
                     .fillMaxSize()
-                    .padding(vertical = 20.dp),
+                    .padding(vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -86,9 +86,8 @@ fun generateQRfromURL(navController: NavController) {
                     label = { Text("Qr name") },
                     placeholder = { Text(text = "Insert qr name") },
                     onValueChange = {
-                        qrContent = it
-                    }
-                )
+                        qrName= it
+                    }                )
                 //Color menu
                 qrColor = dropDownColor()
                 //row of button(save and generate)

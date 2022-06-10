@@ -35,11 +35,9 @@ fun MainBottomBar(navController: NavController){
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement  =  Arrangement.Center) {
-            val context = LocalContext.current
-            val uriHandler = LocalUriHandler.current
             Column(modifier = Modifier.padding(end = 60.dp)) {
                 IconButton(onClick = {
-                    //navController.navigate("myPDF_screen")
+                    navController.navigate("pdfDatabase_screen")
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_picture_as_pdf_24 ),
@@ -61,7 +59,7 @@ fun MainBottomBar(navController: NavController){
             }
             Column(modifier = Modifier.padding(start = 60.dp)) {
                 IconButton(onClick = {
-                    //navController.navigate("myQr_screen")
+                    navController.navigate("qrDatabase_screen")
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_qr_code_24),
@@ -75,7 +73,8 @@ fun MainBottomBar(navController: NavController){
 }
 
 @Composable
-fun BottomBarForRead(navController: NavController, value: String){
+fun BottomBarForRead(navController: NavController,
+                     value: String){
     val clipboardManager: ClipboardManager = LocalClipboardManager.current
 
     BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)){

@@ -6,6 +6,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.allinscanner.controller.Screen
 import com.example.allinscanner.mainMenu.MainMenu
 import com.example.allinscanner.screen.*
+import com.example.allinscanner.ui.databaseScreen.pdfDatabaseScreen
+import com.example.allinscanner.ui.databaseScreen.qrDatabaseScreen
+import com.example.allinscanner.ui.qrGenerator.generateQRfromDate
 import com.example.allinscanner.ui.qrGenerator.generateQRfromPosition
 import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
 
@@ -33,6 +36,15 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
          }
          composable(route = Screen.PositionQrGenerator.route){
              generateQRfromPosition(navController)
+         }
+         composable(route = Screen.CalendarQrGenerator.route){
+             generateQRfromDate(navController)
+         }
+         composable(route = Screen.QrDataScreen.route){
+             qrDatabaseScreen(navController)
+         }
+         composable(route = Screen.PdfDataScreen.route){
+             pdfDatabaseScreen(navController)
          }
 
      }

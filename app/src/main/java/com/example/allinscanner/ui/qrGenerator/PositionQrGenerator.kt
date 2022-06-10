@@ -1,6 +1,5 @@
 package com.example.allinscanner.ui.qrGenerator
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -58,7 +57,7 @@ fun generateQRfromPosition(navController: NavController) {
             LazyColumn(
                 Modifier
                     .fillMaxSize()
-                    .padding(vertical = 20.dp),
+                    .padding(vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

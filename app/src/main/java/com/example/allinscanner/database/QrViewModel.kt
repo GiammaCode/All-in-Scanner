@@ -1,0 +1,49 @@
+package com.example.allinscanner.database
+
+import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class QrViewModel
+@Inject
+constructor(
+    qrCodeDAO: QrCodeDAO): ViewModel(){
+
+        val allQr = mutableListOf<QrCodeEntity>()
+
+    private val repository: QrRepository
+
+    init {
+        repository = QrRepository(qrCodeDAO)
+        onTriggerEvent(QrCodeEvent.GetAllQr)
+    }
+
+    fun onTriggerEvent(event: QrCodeEvent) {
+    viewModelScope.launch(Dispatchers.IO) {
+    try {
+        when(event){
+            is QrCodeEvent.GetAllQr -> {
+                allQr.addAll(repository.getAllQr())
+            }
+            is QrCodeEvent.AddQr -> {
+                addQr(event.qr)
+            }
+        }
+    }
+       catch (e:Exception){
+           Log.e("Error", e.message.toString())
+       }
+    }
+    }
+
+private suspend fun addQr(qr: QrCodeEntity){
+    repository.addQr(qr)
+    allQr.add(qr)
+}
+
+}

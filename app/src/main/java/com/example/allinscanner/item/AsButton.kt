@@ -85,7 +85,7 @@ fun AsButtonGenerator(
         colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
         modifier = Modifier
             .height(40.dp)
-            .width(110.dp),
+            .width(150.dp),
         shape = RoundedCornerShape(30)
     )
     {
@@ -167,24 +167,36 @@ fun AsTopButtonRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        AsButtonGenerator(
-            "Text",
-            R.drawable.ic_baseline_text_snippet_24,
-            navController,
-            "textGenerator_Screen"
-        )
-        AsButtonGenerator(
-            "URL",
-            R.drawable.ic_baseline_add_link_24,
-            navController,
-            "urlGenerator_Screen"
-        )
-        AsButtonGenerator(
-            "Maps",
-            R.drawable.ic_baseline_map_24,
-            navController,
-            "positionGenerator_Screen"
-        )
+        Column() {
+            AsButtonGenerator(
+                "Text",
+                R.drawable.ic_baseline_text_snippet_24,
+                navController,
+                "textGenerator_Screen"
+            )
+            Spacer(modifier = Modifier.padding(5.dp))
+            AsButtonGenerator(
+                "URL",
+                R.drawable.ic_baseline_add_link_24,
+                navController,
+                "urlGenerator_Screen"
+            )
+        }
+        Column() {
+            AsButtonGenerator(
+                "Position",
+                R.drawable.ic_baseline_map_24,
+                navController,
+                "positionGenerator_Screen"
+            )
+            Spacer(modifier = Modifier.padding(5.dp))
+            AsButtonGenerator(
+                "Calendar",
+                R.drawable.ic_baseline_calendar_month_24,
+                navController,
+                "calendarGenerator_screen"
+            )
+        }
     }
 }
 
