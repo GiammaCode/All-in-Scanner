@@ -16,10 +16,9 @@ constructor(
 
         val allQr = mutableListOf<QrCodeEntity>()
 
-    private val repository: QrRepository
+    private val repository: QrRepository = QrRepository(qrCodeDAO)
 
     init {
-        repository = QrRepository(qrCodeDAO)
         onTriggerEvent(QrCodeEvent.GetAllQr)
     }
 

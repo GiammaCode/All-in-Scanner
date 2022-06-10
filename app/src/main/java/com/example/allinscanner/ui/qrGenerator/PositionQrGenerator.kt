@@ -16,6 +16,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.allinscanner.database.QrViewModel
 import com.example.allinscanner.item.*
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -25,7 +26,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-fun generateQRfromPosition(navController: NavController) {
+fun generateQRfromPosition(navController: NavController, qrViewModel: QrViewModel) {
     val context = LocalContext.current
 
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))

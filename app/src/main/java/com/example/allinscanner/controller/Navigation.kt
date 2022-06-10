@@ -1,9 +1,11 @@
 package com.example.allinscanner.item
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.allinscanner.controller.Screen
+import com.example.allinscanner.database.QrViewModel
 import com.example.allinscanner.mainMenu.MainMenu
 import com.example.allinscanner.screen.*
 import com.example.allinscanner.ui.databaseScreen.pdfDatabaseScreen
@@ -15,6 +17,7 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
 @Composable
  fun Navigation(){
      val navController = rememberNavController()
+     val qrVModel = hiltViewModel<QrViewModel>()
      NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
          composable(route = Screen.MainMenu.route){
             MainMenu(navController = navController)
@@ -29,16 +32,16 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
              readBarcode(navController)
          }
          composable(route = Screen.TextQrGenerator.route){
-             generateQRfromtext(navController)
+             generateQRfromtext(navController, qrVModel)
          }
          composable(route = Screen.UrlQrGenerator.route){
-             generateQRfromURL(navController)
+             generateQRfromURL(navController, qrVModel)
          }
          composable(route = Screen.PositionQrGenerator.route){
-             generateQRfromPosition(navController)
+             generateQRfromPosition(navController, qrVModel)
          }
          composable(route = Screen.CalendarQrGenerator.route){
-             generateQRfromDate(navController)
+             generateQRfromDate(navController, qrVModel)
          }
          composable(route = Screen.QrDataScreen.route){
              qrDatabaseScreen(navController)

@@ -21,12 +21,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
+import com.example.allinscanner.database.QrViewModel
 import com.example.allinscanner.item.*
 import java.util.*
 
 
 @Composable
-fun generateQRfromDate(navController: NavController) {
+fun generateQRfromDate(navController: NavController, qrViewModel: QrViewModel) {
 
     val context = LocalContext.current
 

@@ -20,12 +20,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
+import com.example.allinscanner.database.QrViewModel
 import com.example.allinscanner.item.*
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
 import com.pspdfkit.internal.id
 
 @Composable
-fun generateQRfromtext(navController: NavController) {
+fun generateQRfromtext(navController: NavController, qrViewModel: QrViewModel) {
 
     val context = LocalContext.current
 
@@ -93,7 +94,7 @@ fun generateQRfromtext(navController: NavController) {
                 //Color menu
                 qrColor = dropDownColor()
                 //row of button(save and generate)
-                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor)
+                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor, qrViewModel)
             }
         },
         bottomBar = { MainBottomBar(navController) }
