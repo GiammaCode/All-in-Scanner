@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.allinscanner.controller.Screen
+import com.example.allinscanner.database.PdfViewModel
 import com.example.allinscanner.database.QrViewModel
 import com.example.allinscanner.mainMenu.MainMenu
 import com.example.allinscanner.screen.*
@@ -18,6 +19,7 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
  fun Navigation(){
      val navController = rememberNavController()
      val qrVModel = hiltViewModel<QrViewModel>()
+    val pdfVModel = hiltViewModel<PdfViewModel>()
      NavHost(navController = navController, startDestination = Screen.MainMenu.route) {
          composable(route = Screen.MainMenu.route){
             MainMenu(navController = navController)
@@ -26,7 +28,7 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
              readQRcode(navController)
          }
          composable(route = Screen.ScanPDF.route){
-             scanPDF(navController)
+             scanPDF(navController, pdfVModel)
          }
          composable(route = Screen.ReadBarcode.route){
              readBarcode(navController)
@@ -44,10 +46,10 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
              generateQRfromDate(navController, qrVModel)
          }
          composable(route = Screen.QrDataScreen.route){
-             qrDatabaseScreen(navController)
+             qrDatabaseScreen(navController, qrVModel)
          }
          composable(route = Screen.PdfDataScreen.route){
-             pdfDatabaseScreen(navController)
+             pdfDatabaseScreen(navController, pdfVModel)
          }
 
      }

@@ -92,7 +92,7 @@ fun generateQRfromURL(navController: NavController, qrViewModel: QrViewModel) {
                 //Color menu
                 qrColor = dropDownColor()
                 //row of button(save and generate)
-                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor)
+                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor,  qrViewModel, "URL")
             }
         },
         bottomBar = { MainBottomBar(navController) }

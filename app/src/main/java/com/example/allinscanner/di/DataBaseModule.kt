@@ -6,6 +6,7 @@ import android.content.Context
 import androidx.room.Room
 
 import com.example.allinscanner.database.DatabaseAllInScanner
+import com.example.allinscanner.database.PdfDAO
 import com.example.allinscanner.database.QrCodeDAO
 import dagger.Module
 import dagger.Provides
@@ -22,6 +23,11 @@ class DatabaseModule {
     @Provides
     fun provideQrDao(database : DatabaseAllInScanner): QrCodeDAO {
         return database.qrCodeDao()
+    }
+
+    @Provides
+    fun providePdfDao(database : DatabaseAllInScanner): PdfDAO {
+        return database.pdfDao()
     }
 
 

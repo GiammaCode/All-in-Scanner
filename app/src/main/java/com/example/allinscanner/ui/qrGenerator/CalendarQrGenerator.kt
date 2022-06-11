@@ -81,7 +81,7 @@ fun generateQRfromDate(navController: NavController, qrViewModel: QrViewModel) {
                 //Color menu
                 qrColor = dropDownColor()
                 //row of button(save and generate)
-                bmp = AsBottomButtonRow(context, date, qrName, bmp, qrColor)
+                bmp = AsBottomButtonRow(context, date, qrName, bmp, qrColor, qrViewModel, "Calendar")
             }
         },
         bottomBar = { MainBottomBar(navController) }

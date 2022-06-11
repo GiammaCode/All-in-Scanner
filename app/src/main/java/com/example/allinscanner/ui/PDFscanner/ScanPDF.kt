@@ -25,6 +25,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.allinscanner.R
+import com.example.allinscanner.database.PdfViewModel
 import com.example.allinscanner.item.AsFloatingButton
 import com.example.allinscanner.item.BottomBarForScan
 import com.example.allinscanner.item.topBarSec
@@ -33,7 +34,7 @@ import java.io.File
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun scanPDF(navController: NavController) {
+fun scanPDF(navController: NavController, pdfViewModel: PdfViewModel) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
@@ -119,7 +120,8 @@ fun scanPDF(navController: NavController) {
                 saveName = pdfName,
                 photoUri = Uri.fromFile(photoFile) ,
                 outputDirectory = context.getDirectory(),
-                camera = camera
+                camera = camera,
+                pdfViewModel = pdfViewModel
             )
 
         }

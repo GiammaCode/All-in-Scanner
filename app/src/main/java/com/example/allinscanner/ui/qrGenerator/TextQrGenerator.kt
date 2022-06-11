@@ -94,7 +94,7 @@ fun generateQRfromtext(navController: NavController, qrViewModel: QrViewModel) {
                 //Color menu
                 qrColor = dropDownColor()
                 //row of button(save and generate)
-                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor, qrViewModel)
+                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor, qrViewModel, "Text")
             }
         },
         bottomBar = { MainBottomBar(navController) }

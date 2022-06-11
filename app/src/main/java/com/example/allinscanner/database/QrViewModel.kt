@@ -12,9 +12,10 @@ import javax.inject.Inject
 class QrViewModel
 @Inject
 constructor(
-    qrCodeDAO: QrCodeDAO): ViewModel(){
+    qrCodeDAO: QrCodeDAO
+) : ViewModel() {
 
-        val allQr = mutableListOf<QrCodeEntity>()
+    val allQr = mutableListOf<QrCodeEntity>()
 
     private val repository: QrRepository = QrRepository(qrCodeDAO)
 
@@ -23,26 +24,27 @@ constructor(
     }
 
     fun onTriggerEvent(event: QrCodeEvent) {
-    viewModelScope.launch(Dispatchers.IO) {
-    try {
-        when(event){
-            is QrCodeEvent.GetAllQr -> {
-                allQr.addAll(repository.getAllQr())
-            }
-            is QrCodeEvent.AddQr -> {
-                addQr(event.qr)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                when (event) {
+                    is QrCodeEvent.GetAllQr -> {
+                        allQr.addAll(repository.getAllQr())
+                    }
+                    is QrCodeEvent.AddQr -> {
+                        addQr(event.qr)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error", e.message.toString())
             }
         }
     }
-       catch (e:Exception){
-           Log.e("Error", e.message.toString())
-       }
-    }
-    }
 
-private suspend fun addQr(qr: QrCodeEntity){
-    repository.addQr(qr)
-    allQr.add(qr)
-}
+    fun addQr(qr: QrCodeEntity) {
+        viewModelScope.launch {
+            repository.addQr(qr)
+            allQr.add(qr)
+        }
+    }
 
 }

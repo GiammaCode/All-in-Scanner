@@ -119,7 +119,7 @@ fun generateQRfromPosition(navController: NavController, qrViewModel: QrViewMode
                 //row of button(save and generate)
                 item {
                     var qrCont = "https://maps.google.com/local?q="+qrPosition.latitude+","+qrPosition.longitude
-                    bmp = AsBottomButtonRow(context, qrCont, qrName, bmp, qrColor)
+                    bmp = AsBottomButtonRow(context, qrCont, qrName, bmp, qrColor, qrViewModel, "Position")
                 }
                 item {
                     Spacer(modifier = Modifier.height(64.dp))

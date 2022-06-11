@@ -211,7 +211,8 @@ fun AsBottomButtonRow(
     qrName: String,
     bmp: Bitmap,
     qrColor: Int,
-    qrViewModel: QrViewModel
+    qrViewModel: QrViewModel,
+    qrType:String
 ): Bitmap {
 
     var bitmap by remember {
@@ -234,8 +235,8 @@ fun AsBottomButtonRow(
                     fOut.flush();
                     fOut.close();
                     //add nel DB
-                    var currentQr = QrCodeEntity(qrName, qrName, filePath.path)
-                    qrViewModel.allQr.add(currentQr)
+                    var currentQr = QrCodeEntity(qrName, qrName, filePath.path, qrType)
+                    qrViewModel.addQr(currentQr)
 
                     Toast.makeText(context, "QR code saved with successfully", Toast.LENGTH_SHORT)
                         .show()
@@ -293,7 +294,7 @@ fun AsBottomButtonRow(
 }
 
 //senza viewModel
-@Composable
+/*@Composable
 fun AsBottomButtonRow(
     context: Context,
     qrContent: String,
@@ -375,7 +376,7 @@ fun AsBottomButtonRow(
         }
     }
     return bitmap
-}
+}*/
 
 
 

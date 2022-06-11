@@ -25,6 +25,8 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.allinscanner.R
+import com.example.allinscanner.database.PdfEntity
+import com.example.allinscanner.database.PdfViewModel
 import com.example.allinscanner.ui.PDFscanner.processPdf
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
 import java.io.File
@@ -137,7 +139,8 @@ fun BottomBarForScan(navController: NavController,
                      saveName: String,
                      photoUri : Uri,
                      outputDirectory: File,
-                     camera: Camera
+                     camera: Camera,
+                     pdfViewModel: PdfViewModel
 ){
             var flashDisable by remember {
                 mutableStateOf(true)
@@ -153,6 +156,10 @@ fun BottomBarForScan(navController: NavController,
                                 try {
                                     //save the PDF
                                     processPdf(context, photoUri, saveName, outputDirectory)
+                                    //add nel db
+                                    var pdf = PdfEntity(saveName, saveName, outputDirectory.path)
+                                    pdfViewModel.addPdf(pdf)
+
                                 } catch (e: Exception) {
                                     Toast.makeText(context, "Retry to scan", Toast.LENGTH_SHORT).show()
                                     Log.e("processPDF ERROR", e.message.toString())
