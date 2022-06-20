@@ -23,7 +23,8 @@ fun qrDatabaseScreen(navController: NavController, qrViewModel: QrViewModel) {
         content = {
             LazyColumn(){
                 items(qrViewModel.allQr){
-                    qr -> asQrCard(qr.name, qr.path, qr.type)
+                    qr ->
+                    qr.content?.let { it1 -> asQrCard(qr.name, it1, qr.type) }
                 }
                 item(){
                     Spacer(modifier = Modifier.padding(20.dp))

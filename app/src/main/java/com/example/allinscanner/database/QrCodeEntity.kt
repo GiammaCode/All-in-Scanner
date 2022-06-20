@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class QrCodeEntity(
     @PrimaryKey var id: String,
     val name: String?,
-    val path: String?,
+    val content: String?,
     val type: String?
 )

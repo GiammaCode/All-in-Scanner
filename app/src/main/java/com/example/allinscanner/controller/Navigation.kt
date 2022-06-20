@@ -51,6 +51,5 @@ import com.example.allinscanner.ui.qrGenerator.generateQRfromURL
          composable(route = Screen.PdfDataScreen.route){
              pdfDatabaseScreen(navController, pdfVModel)
          }
-
      }
  }

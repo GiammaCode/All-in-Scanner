@@ -4,10 +4,17 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_barcode_24.xml" value="0.14" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_calendar_month_24.xml" value="0.117" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_content_copy_24.xml" value="0.117" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_document_scanner_24.xml" value="0.117" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_flash_off_24.xml" value="0.117" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_hive_24.xml" value="0.117" />
         <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.176" />
         <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_qr_code_24.xml" value="0.16" />
         <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_baseline_qr_code_scanner_24.xml" value="0.16" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/drawable/ic_launcher_scanner_foreground.xml" value="0.117" />
         <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/mipmap-anydpi-v26/AppIcon.xml" value="0.1155" />
+        <entry key="..\:/Users/giamm/Desktop/All-in-Scanner/app/src/main/res/mipmap-anydpi-v26/ic_titleImage.xml" value="0.117" />
       </map>
     </option>
   </component>

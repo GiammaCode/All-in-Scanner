@@ -58,7 +58,7 @@ fun AsButton(
         modifier = Modifier
             .height(70.dp)
             .width(300.dp),
-        shape = RoundedCornerShape(50)
+        shape = RoundedCornerShape(20)
     )
     {
         Image(
@@ -235,7 +235,7 @@ fun AsBottomButtonRow(
                     fOut.flush();
                     fOut.close();
                     //add nel DB
-                    var currentQr = QrCodeEntity(qrName, qrName, filePath.path, qrType)
+                    var currentQr = QrCodeEntity(qrName, qrName, qrContent, qrType)
                     qrViewModel.addQr(currentQr)
 
                     Toast.makeText(context, "QR code saved with successfully", Toast.LENGTH_SHORT)
@@ -292,94 +292,3 @@ fun AsBottomButtonRow(
     }
     return bitmap
 }
-
-//senza viewModel
-/*@Composable
-fun AsBottomButtonRow(
-    context: Context,
-    qrContent: String,
-    qrName: String,
-    bmp: Bitmap,
-    qrColor: Int
-): Bitmap {
-
-    var bitmap by remember {
-        mutableStateOf(bmp)
-    }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-
-        Button(
-            onClick = {
-                //save QR
-                if (qrName.isNotEmpty()) {
-                    var filePath = context.getDirectory()
-                    var file = File(filePath, "$qrName.png");
-                    var fOut = FileOutputStream(file);
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 85, fOut);
-                    fOut.flush();
-                    fOut.close();
-                    //add nel DB
-                    Toast.makeText(context, "QR code saved with successfully", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(context, "Insert QR code name", Toast.LENGTH_SHORT).show()
-                }
-
-            },
-            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
-            modifier = Modifier
-                .height(50.dp)
-                .width(170.dp),
-            shape = RoundedCornerShape(30)
-        )
-        {
-            Image(
-                painterResource(id = R.drawable.ic_baseline_save_alt_24),
-                contentDescription = "Save QR",
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = "Save QR",
-                Modifier.padding(start = 10.dp),
-                style = MaterialTheme.typography.subtitle1
-            )
-        }
-
-        Button(
-            onClick = {
-                bitmap = getQrCodeBitmap(qrContent, qrColor)
-                Toast.makeText(context, "QR code generated with successfully", Toast.LENGTH_SHORT)
-                    .show()
-
-            },
-            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.scanner_red)),
-            modifier = Modifier
-                .height(50.dp)
-                .width(170.dp),
-            shape = RoundedCornerShape(30)
-        )
-        {
-            Image(
-                painterResource(id = R.drawable.ic_baseline_hive_24),
-                contentDescription = "Generate QR",
-                modifier = Modifier.size(20.dp)
-            )
-            Text(
-                text = "Generate QR",
-                Modifier.padding(start = 10.dp),
-                style = MaterialTheme.typography.subtitle1
-            )
-        }
-    }
-    return bitmap
-}*/
-
-
-
-
-
-
