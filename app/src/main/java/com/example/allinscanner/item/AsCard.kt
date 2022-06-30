@@ -1,10 +1,12 @@
 package com.example.allinscanner.item
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Environment
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -15,15 +17,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
 import com.example.allinscanner.R
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
+import java.io.File
 
 
 @Composable
@@ -37,8 +42,8 @@ fun asQrCard(qrName:String?, path: String, type:String?) {
             .padding(15.dp)
             .clickable(
                 onClick = {
-                openDialog.value = !openDialog.value
-            }),
+                    openDialog.value = !openDialog.value
+                }),
         elevation = 10.dp
     ) {
         Column(modifier = Modifier.padding(15.dp)) {
@@ -71,7 +76,7 @@ fun asQrCard(qrName:String?, path: String, type:String?) {
         if(openDialog.value){
             Box(
                 Modifier
-                    .size(400.dp,300.dp)
+                    .size(400.dp, 300.dp)
                     .padding(top = 25.dp, start = 20.dp),
                 contentAlignment =Alignment.Center
             ) {
@@ -81,31 +86,45 @@ fun asQrCard(qrName:String?, path: String, type:String?) {
 
     }
 }
+
 @Composable
-fun asPdfCard(qrName:String?, path: String?) {
+fun asPdfCard(pdfName:String?, path: String?) {
+    val finalPath = "$path/$pdfName.pdf"
+   val intent = Intent(Intent.ACTION_VIEW).apply {
+        setDataAndType( Uri.parse(finalPath), "application/pdf")
+        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    val context = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(15.dp)
-            .clickable { },
+            .clickable(
+                onClick = {
+                    startActivity(context,intent, null)
+                    Log.d("final Path",finalPath)
+                }),
         elevation = 10.dp
     ) {
+        Column(modifier = Modifier.padding(15.dp)) {
+            Image(
+                painterResource(id = R.drawable.ic_baseline_picture_as_pdf_24),
+                contentDescription = "pdf",
+                modifier = Modifier.size(45.dp),
+                colorFilter = ColorFilter.tint(color = Color.Black)
+            )
+        }
         Column(
-            modifier = Modifier.padding(15.dp)
+            modifier = Modifier.padding(start = 75.dp, 15.dp)
         ) {
             Text(
                 buildAnnotatedString {
                     append("Pdf Name:  ")
                     withStyle(style = SpanStyle(fontWeight = FontWeight.W900, color = Color.Red)
                     ) {
-                        append("$qrName")
+                        append("$pdfName")
                     }
-                }
-            )
-            Text(
-                buildAnnotatedString {
-                    append("path: ")
-                    append("$path")
                 }
             )
         }

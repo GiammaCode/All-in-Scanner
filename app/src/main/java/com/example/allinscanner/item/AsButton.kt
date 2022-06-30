@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -24,8 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.database.QrCodeEntity
@@ -48,7 +47,6 @@ fun AsButton(
     newScreen: String
 ) {
     val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
-
     Button(
         onClick = {
             cameraPermissionState.launchPermissionRequest()
@@ -200,6 +198,65 @@ fun AsTopButtonRow(
                 navController,
                 "calendarGenerator_screen"
             )
+        }
+    }
+}
+
+@Composable
+fun AsTopButtonRowForDb(
+    navController: NavController
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceAround
+    ) {
+        LazyRow(){
+            item {
+                Spacer(modifier = Modifier.padding(5.dp))
+                AsButtonGenerator(
+                "All",
+                R.drawable.ic_baseline_select_all_24,
+                navController,
+                    "qrDatabase_screen"
+            )
+                Spacer(modifier = Modifier.padding(5.dp))
+            }
+           item {
+               AsButtonGenerator(
+                   "Text",
+                   R.drawable.ic_baseline_text_snippet_24,
+                   navController,
+                   "qrTextDbScreen"
+               )
+               Spacer(modifier = Modifier.padding(5.dp))
+           }
+            item {
+                AsButtonGenerator(
+                    "URL",
+                    R.drawable.ic_baseline_add_link_24,
+                    navController,
+                    "qrUrlDbScreen"
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+            }
+          item {
+              AsButtonGenerator(
+                  "Position",
+                  R.drawable.ic_baseline_map_24,
+                  navController,
+                  "qrPosDbScreen"
+              )
+              Spacer(modifier = Modifier.padding(5.dp))
+          }
+            item {
+                AsButtonGenerator(
+                    "Calendar",
+                    R.drawable.ic_baseline_calendar_month_24,
+                    navController,
+                    "qrCalDbScreen"
+                )
+                Spacer(modifier = Modifier.padding(5.dp))
+            }
         }
     }
 }

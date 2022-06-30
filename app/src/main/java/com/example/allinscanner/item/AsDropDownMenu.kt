@@ -1,9 +1,11 @@
 package com.example.allinscanner.item
 
 import android.graphics.Color
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
@@ -11,8 +13,10 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.unit.dp
+import com.example.allinscanner.database.QrCodeEntity
 
 @Composable
 fun dropDownColor(): Int {
@@ -72,3 +76,5 @@ private fun convertColor(color: String): Int {
     }
     return colorInt
 }
+
+

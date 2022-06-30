@@ -3,6 +3,7 @@ package com.example.allinscanner.screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -48,7 +49,7 @@ fun generateQRfromtext(navController: NavController, qrViewModel: QrViewModel) {
         scaffoldState = scaffoldState,
         topBar = { topBarSec("QR generator", navController) },
         content = {
-            Column(
+            LazyColumn(
                 Modifier
                     .fillMaxSize()
                     .padding(vertical = 10.dp),
@@ -56,11 +57,11 @@ fun generateQRfromtext(navController: NavController, qrViewModel: QrViewModel) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 //row of button (URL , text, maps)
-                AsTopButtonRow(navController)
+               item{ AsTopButtonRow(navController)}
                 //QR CODE image
-                Image(bmp.asImageBitmap(), "qr code")
+                item{Image(bmp.asImageBitmap(), "qr code")}
                 //insert text
-                OutlinedTextField(
+                item{OutlinedTextField(
                     value = qrContent,
                     maxLines = 5,
                     modifier = Modifier
@@ -74,9 +75,9 @@ fun generateQRfromtext(navController: NavController, qrViewModel: QrViewModel) {
                     onValueChange = {
                         qrContent = it
                     }
-                )
+                )}
                 //insert qrName
-                OutlinedTextField(
+                item{OutlinedTextField(
                     value = qrName,
                     maxLines = 5,
                     modifier = Modifier
@@ -90,11 +91,11 @@ fun generateQRfromtext(navController: NavController, qrViewModel: QrViewModel) {
                     onValueChange = {
                         qrName = it
                     }
-                )
+                )}
                 //Color menu
-                qrColor = dropDownColor()
+                item{qrColor = dropDownColor()}
                 //row of button(save and generate)
-                bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor, qrViewModel, "Text")
+                item{bmp = AsBottomButtonRow(context, qrContent, qrName, bmp, qrColor, qrViewModel, "Text")}
             }
         },
         bottomBar = { MainBottomBar(navController) }

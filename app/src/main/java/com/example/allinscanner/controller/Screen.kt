@@ -14,5 +14,9 @@ sealed class Screen (val route: String) {
 
 
     object QrDataScreen : Screen(route = "qrDatabase_screen")
+    object QrTextDbScreen : Screen(route = "qrTextDbScreen")
+    object QrPosDbScreen : Screen(route = "qrPosDbScreen")
+    object QrCalDbScreen : Screen(route = "qrCalDbScreen")
+    object QrUrlDbScreen : Screen(route = "qrUrlDbScreen")
     object PdfDataScreen : Screen(route = "pdfDatabase_screen")
 }

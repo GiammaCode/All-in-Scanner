@@ -17,6 +17,27 @@ constructor(
     val allPdf = mutableListOf<PdfEntity>()
 
     private val repository: PdfRepository = PdfRepository(pdfDAO)
+    init {
+        onTriggerEvent(PdfEvent.GetAllPdf)
+    }
+
+    fun onTriggerEvent(event: PdfEvent) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                when (event) {
+                    is PdfEvent.GetAllPdf-> {
+                        allPdf.addAll(repository.getAllPdf())
+                    }
+                    is PdfEvent.AddPdf -> {
+                        addPdf(event.pdf)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("Error", e.message.toString())
+            }
+        }
+    }
+
 
     fun addPdf(pdf: PdfEntity) {
         viewModelScope.launch {

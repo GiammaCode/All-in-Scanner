@@ -1,5 +1,6 @@
 package com.example.allinscanner.item
 
+import android.Manifest
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
@@ -29,16 +30,23 @@ import com.example.allinscanner.database.PdfEntity
 import com.example.allinscanner.database.PdfViewModel
 import com.example.allinscanner.ui.PDFscanner.processPdf
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberPermissionState
 import java.io.File
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun MainBottomBar(navController: NavController){
+
+    val pdfPermissionState = rememberPermissionState(permission = Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
     BottomAppBar(backgroundColor = colorResource(R.color.scanner_red)){
         Row(modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement  =  Arrangement.Center) {
             Column(modifier = Modifier.padding(end = 60.dp)) {
                 IconButton(onClick = {
+                    pdfPermissionState.launchPermissionRequest()
                     navController.navigate("pdfDatabase_screen")
                 }) {
                     Icon(
