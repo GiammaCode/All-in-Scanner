@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.example.allinscanner.R
 import com.example.allinscanner.database.PdfEntity
 import com.example.allinscanner.database.PdfViewModel
+import com.example.allinscanner.screen.getDirectory
 import com.example.allinscanner.ui.PDFscanner.processPdf
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -164,6 +165,8 @@ fun BottomBarForScan(navController: NavController,
                                 try {
                                     //save the PDF
                                     processPdf(context, photoUri, saveName, outputDirectory)
+                                    Log.d("output directtory",outputDirectory.path)
+                                    Log.d("photoUri",photoUri.toString())
                                     //add nel db
                                     var pdf = PdfEntity(saveName, saveName, outputDirectory.path)
                                     pdfViewModel.addPdf(pdf)

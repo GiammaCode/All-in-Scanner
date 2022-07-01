@@ -24,11 +24,9 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import com.example.allinscanner.R
 import com.example.allinscanner.ui.qrGenerator.getQrCodeBitmap
-import java.io.File
 
 
 @Composable
@@ -89,12 +87,18 @@ fun asQrCard(qrName:String?, path: String, type:String?) {
 
 @Composable
 fun asPdfCard(pdfName:String?, path: String?) {
-    val finalPath = "$path/$pdfName.pdf"
-   val intent = Intent(Intent.ACTION_VIEW).apply {
+
+    /*val finalPath = "/storage/emulated/0/Android/media/com.example.allinscanner/All%20in%20Scanner/peee.pdf"
+    val intent = Intent(Intent.ACTION_VIEW).apply {
         setDataAndType( Uri.parse(finalPath), "application/pdf")
         flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-    }
+    }*/
+    val path = Environment.getExternalStorageDirectory().toString() + "/Android/media/com.example.allinscanner/All in Scanner/MYPDF/"
+    val uri = Uri.parse(path)
+    val intent = Intent(Intent.ACTION_PICK)
+    intent.setDataAndType(uri, "*/*")
+
     val context = LocalContext.current
     Card(
         modifier = Modifier
@@ -102,8 +106,7 @@ fun asPdfCard(pdfName:String?, path: String?) {
             .padding(15.dp)
             .clickable(
                 onClick = {
-                    startActivity(context,intent, null)
-                    Log.d("final Path",finalPath)
+                    startActivity(context, intent, null)
                 }),
         elevation = 10.dp
     ) {

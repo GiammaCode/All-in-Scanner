@@ -3,6 +3,7 @@ package com.example.allinscanner.ui.PDFscanner
 import android.content.Context
 import android.graphics.RectF
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import com.pspdfkit.document.processor.NewPage
 import com.pspdfkit.document.processor.PageImage
@@ -31,9 +32,9 @@ fun createPdfFromImageTask(imageUri: Uri, context: Context) : PdfProcessorTask {
 fun processPdf(context: Context, imageUri: Uri, pdfName: String,  outputDirectory: File){
     val saveOutNamePDF = "$pdfName.pdf"
     val task = createPdfFromImageTask(imageUri,context)
-    val outputPath = outputDirectory.resolve(
-        saveOutNamePDF )
+    val outputPath = outputDirectory.resolve("MYPDF/" + saveOutNamePDF )
     // Process the document.
     PdfProcessor.processDocument(task, outputPath)
+    Log.d("ProcessPDF", outputPath.toString())
     Toast.makeText(context, "$saveOutNamePDF saved", Toast.LENGTH_SHORT).show()
 }

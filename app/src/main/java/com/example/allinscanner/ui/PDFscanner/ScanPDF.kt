@@ -3,6 +3,7 @@ package com.example.allinscanner.screen
 import android.content.Context
 import android.graphics.Camera
 import android.net.Uri
+import android.util.Log
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageCapture
